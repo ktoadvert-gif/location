@@ -1,0 +1,20 @@
+<div class="geo-location-filter">
+    <div class="filter-dropdown">
+        <ComboBox @content={{this.countries}} @value={{this.selectedCountryId}} @onChange={{this.onCountryChange}}
+            @options={{hash none="geo_location.country" }} />
+    </div>
+
+    {{#if this.selectedCountryId}}
+    <div class="filter-dropdown">
+        <ComboBox @content={{this.regions}} @value={{this.selectedRegionId}} @onChange={{this.onRegionChange}}
+            @options={{hash none="geo_location.region" }} />
+    </div>
+    {{/if}}
+
+    {{#if this.selectedRegionId}}
+    <div class="filter-dropdown">
+        <ComboBox @content={{this.cities}} @value={{this.selectedCityId}} @onChange={{this.onCityChange}}
+            @options={{hash none="geo_location.city" }} />
+    </div>
+    {{/if}}
+</div>

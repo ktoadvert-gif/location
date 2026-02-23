@@ -1,0 +1,14 @@
+en:
+  js:
+    geo_location:
+      country: "Country"
+      region: "Region"
+      city: "City"
+      select_country: "Select Country"
+      select_region: "Select Region"
+      select_city: "Select City"
+      required_error: "Geo-location is required to create a topic."
+  geo_location:
+    country: "Country"
+    region: "Region"
+    city: "City"

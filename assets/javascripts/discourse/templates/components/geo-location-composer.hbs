@@ -1,0 +1,35 @@
+<div class="geo-location-composer">
+  <div class="control-group">
+    <label>{{i18n "geo_location.country"}}</label>
+    <ComboBox
+      @content={{this.countries}}
+      @value={{this.selectedCountryId}}
+      @onChange={{this.onCountryChange}}
+      @options={{hash none="geo_location.select_country"}}
+    />
+  </div>
+
+  {{#if this.selectedCountryId}}
+    <div class="control-group">
+      <label>{{i18n "geo_location.region"}}</label>
+      <ComboBox
+        @content={{this.regions}}
+        @value={{this.selectedRegionId}}
+        @onChange={{this.onRegionChange}}
+        @options={{hash none="geo_location.select_region"}}
+      />
+    </div>
+  {{/if}}
+
+  {{#if this.selectedRegionId}}
+    <div class="control-group">
+      <label>{{i18n "geo_location.city"}}</label>
+      <ComboBox
+        @content={{this.cities}}
+        @value={{this.selectedCityId}}
+        @onChange={{this.onCityChange}}
+        @options={{hash none="geo_location.select_city"}}
+      />
+    </div>
+  {{/if}}
+</div>
