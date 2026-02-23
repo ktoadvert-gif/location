@@ -37,15 +37,15 @@ after_initialize do
     class ::TopicQuery
       def list_filter_by_location(topics, options)
         if options[:country_id].present?
-          topics = topics.joins("INNER JOIN topic_locations ON topic_locations.topic_id = topics.id")
-          topics = topics.where("topic_locations.country_id = ?", options[:country_id])
+          topics = topics.joins("INNER JOIN gl_topic_locations ON gl_topic_locations.topic_id = topics.id")
+          topics = topics.where("gl_topic_locations.gl_country_id = ?", options[:country_id])
           
           if options[:region_id].present?
-            topics = topics.where("topic_locations.region_id = ?", options[:region_id])
+            topics = topics.where("gl_topic_locations.gl_region_id = ?", options[:region_id])
           end
           
           if options[:city_id].present?
-            topics = topics.where("topic_locations.city_id = ?", options[:city_id])
+            topics = topics.where("gl_topic_locations.gl_city_id = ?", options[:city_id])
           end
         end
         topics
@@ -61,11 +61,25 @@ after_initialize do
 
   # Add location info to Topic serializers
   add_to_serializer(:topic_view, :location) do
-    GeoLocation::TopicLocation.find_by(topic_id: object.topic.id)
+    location = GeoLocation::TopicLocation.find_by(topic_id: object.topic.id)
+    if location
+      {
+        country_id: location.gl_country_id,
+        region_id: location.gl_region_id,
+        city_id: location.gl_city_id
+      }
+    end
   end
 
   add_to_serializer(:topic_list_item, :location) do
-    GeoLocation::TopicLocation.find_by(topic_id: object.id)
+    location = GeoLocation::TopicLocation.find_by(topic_id: object.id)
+    if location
+      {
+        country_id: location.gl_country_id,
+        region_id: location.gl_region_id,
+        city_id: location.gl_city_id
+      }
+    end
   end
 
   # Include location in TopicList preloading to avoid N+1

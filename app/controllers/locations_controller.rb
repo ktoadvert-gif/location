@@ -11,12 +11,12 @@ module ::GeoLocation
 
     def regions
       params.require(:country_id)
-      render json: Region.where(country_id: params[:country_id]).order(:name).all
+      render json: Region.where(gl_country_id: params[:country_id]).order(:name).all
     end
 
     def cities
       params.require(:region_id)
-      render json: City.where(region_id: params[:region_id]).order(:name).all
+      render json: City.where(gl_region_id: params[:region_id]).order(:name).all
     end
   end
 end

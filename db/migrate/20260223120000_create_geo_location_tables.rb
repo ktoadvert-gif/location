@@ -2,38 +2,38 @@
 
 class CreateGeoLocationTables < ActiveRecord::Migration[7.0]
   def up
-    create_table :countries do |t|
+    create_table :gl_countries do |t|
       t.string :name, null: false
       t.timestamps
     end
 
-    create_table :regions do |t|
+    create_table :gl_regions do |t|
       t.string :name, null: false
-      t.references :country, null: false, foreign_key: true
+      t.references :gl_country, null: false, foreign_key: { to_table: :gl_countries }
       t.timestamps
     end
 
-    create_table :cities do |t|
+    create_table :gl_cities do |t|
       t.string :name, null: false
-      t.references :region, null: false, foreign_key: true
+      t.references :gl_region, null: false, foreign_key: { to_table: :gl_regions }
       t.timestamps
     end
 
-    create_table :topic_locations do |t|
+    create_table :gl_topic_locations do |t|
       t.references :topic, null: false, foreign_key: { on_delete: :cascade }
-      t.references :country, null: false, foreign_key: true
-      t.references :region, null: false, foreign_key: true
-      t.references :city, null: false, foreign_key: true
+      t.references :gl_country, null: false, foreign_key: { to_table: :gl_countries }
+      t.references :gl_region, null: false, foreign_key: { to_table: :gl_regions }
+      t.references :gl_city, null: false, foreign_key: { to_table: :gl_cities }
       t.timestamps
     end
 
-    add_index :topic_locations, [:country_id, :region_id, :city_id], name: "idx_topic_locations_hierarchy"
+    add_index :gl_topic_locations, [:gl_country_id, :gl_region_id, :gl_city_id], name: "idx_gl_topic_locations_hierarchy"
   end
 
   def down
-    drop_table :topic_locations
-    drop_table :cities
-    drop_table :regions
-    drop_table :countries
+    drop_table :gl_topic_locations
+    drop_table :gl_cities
+    drop_table :gl_regions
+    drop_table :gl_countries
   end
 end

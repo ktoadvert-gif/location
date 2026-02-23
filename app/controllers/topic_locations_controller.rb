@@ -15,9 +15,9 @@ module ::GeoLocation
 
       location = TopicLocation.find_or_initialize_by(topic_id: topic.id)
       location.update!(
-        country_id: country_id,
-        region_id: region_id,
-        city_id: city_id
+        gl_country_id: country_id,
+        gl_region_id: region_id,
+        gl_city_id: city_id
       )
 
       render json: success_json

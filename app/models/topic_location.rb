@@ -2,15 +2,15 @@
 
 module ::GeoLocation
   class TopicLocation < ActiveRecord::Base
-    self.table_name = "topic_locations"
+    self.table_name = "gl_topic_locations"
     belongs_to :topic
-    belongs_to :country, class_name: "GeoLocation::Country"
-    belongs_to :region, class_name: "GeoLocation::Region"
-    belongs_to :city, class_name: "GeoLocation::City"
+    belongs_to :country, class_name: "GeoLocation::Country", foreign_key: "gl_country_id"
+    belongs_to :region, class_name: "GeoLocation::Region", foreign_key: "gl_region_id"
+    belongs_to :city, class_name: "GeoLocation::City", foreign_key: "gl_city_id"
 
     validates :topic_id, presence: true, uniqueness: true
-    validates :country_id, presence: true
-    validates :region_id, presence: true
-    validates :city_id, presence: true
+    validates :gl_country_id, presence: true
+    validates :gl_region_id, presence: true
+    validates :gl_city_id, presence: true
   end
 end
